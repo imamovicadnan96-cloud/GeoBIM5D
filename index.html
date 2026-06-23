@@ -42,7 +42,16 @@
       height: 70px;
     }
 
-    .nav-logo img { height: 56px; width: auto; max-width: 220px; object-fit: contain; }
+    .logo-link { text-decoration: none; display: flex; align-items: center; gap: 0.6rem; }
+    .logo-icon { height: 42px; width: 42px; object-fit: contain; border-radius: 4px; background: white; padding: 2px; }
+    .footer-icon { height: 34px; width: 34px; opacity: 0.9; }
+    .logo-text { display: inline-flex; flex-direction: column; line-height: 1.1; }
+    .logo-geo { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.35rem; color: var(--white); letter-spacing: 0.01em; }
+    .logo-bim { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.35rem; color: var(--orange); letter-spacing: 0.01em; }
+    .logo-intl { font-family: 'Rajdhani', sans-serif; font-weight: 500; font-size: 0.72rem; color: rgba(255,255,255,0.6); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 1px; }
+    footer .logo-geo { color: rgba(255,255,255,0.85); font-size: 1.1rem; }
+    footer .logo-bim { font-size: 1.1rem; }
+    footer .logo-intl { font-size: 0.62rem; }
 
     .nav-links {
       display: flex; align-items: center; gap: 2rem;
@@ -497,7 +506,6 @@
       display: flex; align-items: center; justify-content: space-between;
       flex-wrap: wrap; gap: 1rem;
     }
-    footer .footer-logo img { height: 44px; width: auto; max-width: 160px; object-fit: contain; opacity: 0.75; }
     footer p { font-size: 0.82rem; }
     footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
     footer a:hover { color: var(--orange); }
@@ -532,7 +540,10 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">
-    <img src="LOGO_Reklama.png" alt="GeoBIM5D International"/>
+    <a href="#home" class="logo-link">
+      <img src="LOGO_1x1.png" alt="GeoBIM5D icon" class="logo-icon"/>
+      <span class="logo-text"><span class="logo-geo">Geo</span><span class="logo-bim">BIM5D</span><br/><span class="logo-intl">International</span></span>
+    </a>
   </div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#services" data-lang="en" class="inline">Services</a><a href="#services" data-lang="bs" class="inline">Usluge</a></li>
@@ -943,7 +954,10 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">
-    <img src="LOGO_Reklama.png" alt="GeoBIM5D International"/>
+    <a href="#home" class="logo-link">
+      <img src="LOGO_1x1.png" alt="GeoBIM5D icon" class="logo-icon footer-icon"/>
+      <span class="logo-text"><span class="logo-geo">Geo</span><span class="logo-bim">BIM5D</span><br/><span class="logo-intl">International</span></span>
+    </a>
   </div>
   <p>&copy; 2025 GeoBIM5D International. <span data-lang="en">All rights reserved.</span><span data-lang="bs">Sva prava zadržana.</span></p>
   <p><a href="mailto:info@geobim5d.com">info@geobim5d.com</a></p>
