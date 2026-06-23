@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GeoBIM5D International</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1B2A6B;
+      --navy-dark: #111c4e;
+      --orange: #E84E1B;
+      --orange-light: #ff6a3d;
+      --white: #FFFFFF;
+      --grey-light: #F5F6FA;
+      --grey-mid: #e2e4ef;
+      --text-dark: #1a1a2e;
+      --text-mid: #4a4f6a;
+      --text-light: #7a7f9a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(27, 42, 107, 0.97);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw;
+      height: 70px;
+    }
+
+    .nav-logo img { height: 44px; width: auto; }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.82);
+      text-decoration: none;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+
+    .lang-toggle {
+      display: flex; gap: 0;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .lang-btn {
+      background: none; border: none; cursor: pointer;
+      color: rgba(255,255,255,0.65);
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700; font-size: 0.85rem;
+      padding: 5px 12px;
+      letter-spacing: 0.05em;
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: var(--orange);
+      color: var(--white);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--white); border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 100px 6vw 60px;
+      text-align: center;
+    }
+
+    /* Point cloud canvas */
+    #pointcloud {
+      position: absolute; inset: 0;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 820px; }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1.2rem;
+      border: 1px solid var(--orange);
+      padding: 4px 14px; border-radius: 2px;
+    }
+
+    .hero h1 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.08;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero h1 span { color: var(--orange); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.72);
+      line-height: 1.7;
+      max-width: 580px;
+      margin: 0 auto 2.4rem;
+      font-weight: 300;
+    }
+
+    .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--orange);
+      color: var(--white);
+      padding: 14px 32px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700; font-size: 1rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--orange-light); transform: translateY(-1px); }
+
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,0.4);
+      color: var(--white);
+      padding: 13px 30px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700; font-size: 1rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; justify-content: center;
+      margin-top: 3.5rem; flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 2.2rem; font-weight: 700;
+      color: var(--orange); line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem; color: rgba(255,255,255,0.55);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .scroll-hint {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.35);
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .scroll-arrow {
+      width: 1px; height: 36px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; } 50% { opacity: 1; }
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 90px 6vw; }
+    .section-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700; color: var(--navy);
+      line-height: 1.15; margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--text-mid);
+      line-height: 1.75; max-width: 560px;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--grey-light); }
+
+    .services-header { text-align: center; margin-bottom: 3.5rem; }
+    .services-header .section-sub { margin: 0 auto; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 6px;
+      padding: 2rem 1.8rem;
+      border-top: 3px solid transparent;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+      box-shadow: 0 2px 12px rgba(27,42,107,0.06);
+    }
+    .service-card:hover {
+      border-top-color: var(--orange);
+      box-shadow: 0 8px 28px rgba(27,42,107,0.12);
+      transform: translateY(-3px);
+    }
+
+    .service-icon {
+      width: 48px; height: 48px;
+      background: rgba(232,78,27,0.1);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.2rem;
+    }
+    .service-icon svg { width: 26px; height: 26px; stroke: var(--orange); fill: none; stroke-width: 1.8; }
+
+    .service-card h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.25rem; font-weight: 700;
+      color: var(--navy); margin-bottom: 0.6rem;
+    }
+    .service-card p { font-size: 0.92rem; color: var(--text-mid); line-height: 1.68; }
+
+    /* ── PROCESS ── */
+    #process { background: var(--navy); }
+    #process .section-title { color: var(--white); }
+    #process .section-sub { color: rgba(255,255,255,0.6); }
+
+    .process-header { margin-bottom: 3.5rem; max-width: 520px; }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0;
+      max-width: 1100px; margin: 0 auto;
+      position: relative;
+    }
+
+    .process-step {
+      padding: 2rem 1.5rem;
+      border-left: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+    }
+    .process-step:first-child { border-left: none; }
+
+    .step-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 3rem; font-weight: 700;
+      color: rgba(232,78,27,0.25);
+      line-height: 1; margin-bottom: 0.5rem;
+    }
+    .process-step h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--white); margin-bottom: 0.5rem;
+    }
+    .process-step p { font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.65; }
+
+    /* ── PORTFOLIO ── */
+    #portfolio { background: var(--white); }
+    .portfolio-header { text-align: center; margin-bottom: 3rem; }
+    .portfolio-header .section-sub { margin: 0 auto; }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px; margin: 0 auto 2.5rem;
+    }
+
+    .portfolio-card {
+      border-radius: 6px; overflow: hidden;
+      box-shadow: 0 2px 14px rgba(27,42,107,0.08);
+      transition: box-shadow 0.25s, transform 0.2s;
+      background: var(--grey-light);
+    }
+    .portfolio-card:hover { box-shadow: 0 10px 32px rgba(27,42,107,0.16); transform: translateY(-4px); }
+
+    .portfolio-thumb {
+      height: 200px;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+
+    .portfolio-thumb-inner {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      flex-direction: column; gap: 0.5rem;
+    }
+
+    .placeholder-icon { opacity: 0.3; }
+
+    .sketchfab-embed-wrapper {
+      width: 100%; height: 200px;
+    }
+    .sketchfab-embed-wrapper iframe {
+      width: 100%; height: 100%; border: none;
+    }
+
+    .portfolio-info { padding: 1.2rem 1.4rem; }
+    .portfolio-tag {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 0.4rem;
+    }
+    .portfolio-info h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--navy); margin-bottom: 0.3rem;
+    }
+    .portfolio-info p { font-size: 0.85rem; color: var(--text-mid); }
+
+    .portfolio-note {
+      text-align: center;
+      font-size: 0.88rem; color: var(--text-light);
+      font-style: italic;
+    }
+
+    /* ── TECH ── */
+    #technology { background: var(--grey-light); }
+
+    .tech-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    .tech-tags {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      margin-top: 2rem;
+    }
+    .tech-tag {
+      background: var(--white);
+      border: 1px solid var(--grey-mid);
+      border-radius: 3px;
+      padding: 6px 14px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.9rem; font-weight: 600;
+      color: var(--navy);
+      letter-spacing: 0.04em;
+    }
+
+    .tech-visual {
+      background: var(--navy);
+      border-radius: 8px;
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      overflow: hidden;
+    }
+    .tech-spec {
+      background: rgba(255,255,255,0.04);
+      padding: 1.4rem 1.2rem;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .tech-spec-label {
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 0.4rem; font-weight: 600;
+    }
+    .tech-spec-val {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.3rem; font-weight: 700; color: var(--white);
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--white); }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      max-width: 1000px; margin: 0 auto;
+      align-items: start;
+    }
+
+    .contact-info p {
+      font-size: 0.95rem; color: var(--text-mid);
+      line-height: 1.75; margin-bottom: 2rem;
+    }
+
+    .contact-item {
+      display: flex; gap: 0.9rem; align-items: flex-start;
+      margin-bottom: 1.2rem;
+    }
+    .contact-item-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: rgba(232,78,27,0.1);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-item-icon svg { width: 16px; height: 16px; stroke: var(--orange); fill: none; stroke-width: 2; }
+    .contact-item-text { font-size: 0.9rem; color: var(--text-mid); line-height: 1.5; }
+    .contact-item-text strong { display: block; color: var(--navy); font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2px; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label {
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-mid);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      border: 1.5px solid var(--grey-mid);
+      border-radius: 4px;
+      padding: 11px 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.93rem;
+      color: var(--text-dark);
+      background: var(--white);
+      transition: border-color 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--navy); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .btn-submit {
+      background: var(--orange);
+      color: var(--white);
+      border: none; cursor: pointer;
+      padding: 14px 32px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700; font-size: 1rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      border-radius: 3px;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+    .btn-submit:hover { background: var(--orange-light); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-dark);
+      color: rgba(255,255,255,0.5);
+      padding: 2.5rem 6vw;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    footer .footer-logo img { height: 32px; opacity: 0.75; }
+    footer p { font-size: 0.82rem; }
+    footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    footer a:hover { color: var(--orange); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; background: var(--navy); padding: 1.5rem 6vw; gap: 1.2rem; }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      .tech-layout, .contact-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr; }
+      .process-step { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); }
+      .process-step:first-child { border-top: none; }
+      .hero-stats { gap: 1.5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+
+    /* ── HIDDEN LANGUAGE STRINGS ── */
+    [data-lang] { display: none; }
+    .lang-en [data-lang="en"],
+    .lang-bs [data-lang="bs"] { display: block; }
+    .lang-en [data-lang="en"].inline,
+    .lang-bs [data-lang="bs"].inline { display: inline; }
+  </style>
+</head>
+<body class="lang-en">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="LOGO_Reklama.png" alt="GeoBIM5D International"/>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services" data-lang="en" class="inline">Services</a><a href="#services" data-lang="bs" class="inline">Usluge</a></li>
+    <li><a href="#process" data-lang="en" class="inline">Process</a><a href="#process" data-lang="bs" class="inline">Proces</a></li>
+    <li><a href="#portfolio" data-lang="en" class="inline">Portfolio</a><a href="#portfolio" data-lang="bs" class="inline">Portfolio</a></li>
+    <li><a href="#technology" data-lang="en" class="inline">Technology</a><a href="#technology" data-lang="bs" class="inline">Tehnologija</a></li>
+    <li><a href="#contact" data-lang="en" class="inline">Contact</a><a href="#contact" data-lang="bs" class="inline">Kontakt</a></li>
+    <li>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('bs')">BS</button>
+      </div>
+    </li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <canvas id="pointcloud"></canvas>
+  <div class="hero-content">
+    <div class="hero-eyebrow" data-lang="en">Geodesy · 3D Scanning · BIM Modeling</div>
+    <div class="hero-eyebrow" data-lang="bs">Geodezija · 3D Skeniranje · BIM Modeliranje</div>
+
+    <h1 data-lang="en">From the Real World<br/><span>Into Precise Digital Models</span></h1>
+    <h1 data-lang="bs">Iz Stvarnog Svijeta<br/><span>U Precizne Digitalne Modele</span></h1>
+
+    <p class="hero-sub" data-lang="en">We capture existing structures with high-accuracy 3D laser scanning and deliver professional BIM models for architecture, construction, and infrastructure projects.</p>
+    <p class="hero-sub" data-lang="bs">Snimamo postojeće objekte visokopreciznim 3D laserskim skeniranjem i isporučujemo profesionalne BIM modele za arhitektonske, građevinske i infrastrukturne projekte.</p>
+
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary" data-lang="en">Request a Quote</a>
+      <a href="#contact" class="btn-primary" data-lang="bs">Zatražite Ponudu</a>
+      <a href="#portfolio" class="btn-outline" data-lang="en">See Our Work</a>
+      <a href="#portfolio" class="btn-outline" data-lang="bs">Pogledajte Radove</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">±2mm</div>
+        <div class="stat-label" data-lang="en">Scan Accuracy</div>
+        <div class="stat-label" data-lang="bs">Preciznost Skeniranja</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">LOD 400</div>
+        <div class="stat-label" data-lang="en">BIM Detail Level</div>
+        <div class="stat-label" data-lang="bs">Nivo Detalja BIM</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">IFC</div>
+        <div class="stat-label" data-lang="en">Open Standard Output</div>
+        <div class="stat-label" data-lang="bs">Otvoreni Format Izlaza</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span data-lang="en">Scroll</span>
+    <span data-lang="bs">Skroluj</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div class="section-label" data-lang="en">What We Do</div>
+    <div class="section-label" data-lang="bs">Šta Radimo</div>
+    <h2 class="section-title" data-lang="en">End-to-End Digital Surveying</h2>
+    <h2 class="section-title" data-lang="bs">Potpuna Digitalna Izmjera</h2>
+    <p class="section-sub" data-lang="en">From site capture to deliverable-ready models — we handle the full workflow for buildings, industrial facilities, and civil infrastructure.</p>
+    <p class="section-sub" data-lang="bs">Od snimanja terena do gotovih modela — pokrivamo cijeli radni tok za zgrade, industrijska postrojenja i civilnu infrastrukturu.</p>
+  </div>
+
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg>
+      </div>
+      <h3 data-lang="en">3D Laser Scanning</h3>
+      <h3 data-lang="bs">3D Lasersko Skeniranje</h3>
+      <p data-lang="en">High-density point cloud capture of existing structures using professional-grade terrestrial and mobile LiDAR systems. Accuracy to ±2mm.</p>
+      <p data-lang="bs">Snimanje gustih oblaka tačaka postojećih objekata profesionalnim terestričkim i mobilnim LiDAR sistemima. Preciznost do ±2mm.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      </div>
+      <h3 data-lang="en">BIM Modeling (As-Built)</h3>
+      <h3 data-lang="bs">BIM Modeliranje (As-Built)</h3>
+      <p data-lang="en">Converting point cloud data into accurate Revit, ArchiCAD, or IFC models reflecting the true as-built state of your structure — at any LOD.</p>
+      <p data-lang="bs">Pretvaranje oblaka tačaka u precizne Revit, ArchiCAD ili IFC modele koji odražavaju stvarno stanje objekta — na bilo kom LOD nivou.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      </div>
+      <h3 data-lang="en">Geodetic Surveying</h3>
+      <h3 data-lang="bs">Geodetska Izmjera</h3>
+      <p data-lang="en">Traditional and digital geodetic measurements for land registration, deformation monitoring, stakeout, and engineering geodesy.</p>
+      <p data-lang="bs">Tradicionalna i digitalna geodetska mjerenja za katastar, praćenje deformacija, iskolčenje i inženjersku geodeziju.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h3 data-lang="en">Clash Detection & Analysis</h3>
+      <h3 data-lang="bs">Detekcija Kolizija i Analiza</h3>
+      <p data-lang="en">BIM coordination and clash detection services to identify conflicts between structural, MEP, and architectural elements before construction begins.</p>
+      <p data-lang="bs">BIM koordinacija i detekcija kolizija radi otkrivanja sukoba između konstruktivnih, MEP i arhitektonskih elemenata prije gradnje.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><path d="M8 2v16M16 6v16"/></svg>
+      </div>
+      <h3 data-lang="en">UAV / Drone Surveying</h3>
+      <h3 data-lang="bs">UAV / Drone Izmjera</h3>
+      <p data-lang="en">Aerial photogrammetry and drone-based LiDAR for large-area topographic surveys, roof inspections, and hard-to-access structures.</p>
+      <p data-lang="bs">Aerofotogrametrija i LiDAR dronom za topografsku izmjeru velikih površina, inspekciju krovova i teško dostupnih objekata.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      </div>
+      <h3 data-lang="en">Progress Monitoring</h3>
+      <h3 data-lang="bs">Praćenje Napredovanja</h3>
+      <p data-lang="en">Periodic scanning and model comparison to track construction progress, identify deviations from design, and support project management.</p>
+      <p data-lang="bs">Periodično skeniranje i usporedba modela za praćenje napretka gradnje, otkrivanje odstupanja od projekta i podršku upravljanju.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="process-header">
+    <div class="section-label" data-lang="en">How It Works</div>
+    <div class="section-label" data-lang="bs">Kako Funkcionira</div>
+    <h2 class="section-title" data-lang="en">Our Workflow</h2>
+    <h2 class="section-title" data-lang="bs">Naš Radni Tok</h2>
+    <p class="section-sub" data-lang="en">A clear, structured process from first contact to final deliverable.</p>
+    <p class="section-sub" data-lang="bs">Jasan, strukturiran proces od prvog kontakta do konačnog isporuke.</p>
+  </div>
+
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <h3 data-lang="en">Consultation</h3>
+      <h3 data-lang="bs">Konsultacije</h3>
+      <p data-lang="en">We assess the project scope, required LOD, output formats, and site conditions to prepare an accurate proposal.</p>
+      <p data-lang="bs">Procjenjujemo opseg projekta, traženi LOD, izlazne formate i uvjete na terenu radi precizne ponude.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <h3 data-lang="en">Field Scanning</h3>
+      <h3 data-lang="bs">Terensko Skeniranje</h3>
+      <p data-lang="en">Our team mobilizes to site with professional-grade equipment and captures a complete, registered point cloud.</p>
+      <p data-lang="bs">Naš tim izlazi na teren s profesionalnom opremom i prikuplja kompletan, registriran oblak tačaka.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <h3 data-lang="en">Data Processing</h3>
+      <h3 data-lang="bs">Obrada Podataka</h3>
+      <p data-lang="en">Point clouds are registered, cleaned, and geo-referenced in office using specialist software.</p>
+      <p data-lang="bs">Oblaci tačaka se registriraju, čiste i geo-referenciraju u uredu uz pomoć specijaliziranog softvera.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <h3 data-lang="en">BIM Modeling</h3>
+      <h3 data-lang="bs">BIM Modeliranje</h3>
+      <p data-lang="en">Experienced modelers extract geometry and build the BIM model to the agreed level of detail.</p>
+      <p data-lang="bs">Iskusni modelari izvlače geometriju i grade BIM model prema dogovorenom nivou detalja.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">05</div>
+      <h3 data-lang="en">QA & Delivery</h3>
+      <h3 data-lang="bs">Kontrola i Isporuka</h3>
+      <p data-lang="en">Models are QA-checked against the point cloud and delivered in your required formats: RVT, IFC, DWG, or E57.</p>
+      <p data-lang="bs">Modeli se provjere nasuprot oblaku tačaka i isporuče u traženim formatima: RVT, IFC, DWG ili E57.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="portfolio-header">
+    <div class="section-label" data-lang="en">Our Work</div>
+    <div class="section-label" data-lang="bs">Naši Radovi</div>
+    <h2 class="section-title" data-lang="en">Selected Projects</h2>
+    <h2 class="section-title" data-lang="bs">Odabrani Projekti</h2>
+    <p class="section-sub" data-lang="en">Add your project photos or Sketchfab model links here. Each card can embed an interactive 3D viewer.</p>
+    <p class="section-sub" data-lang="bs">Ovdje dodajte fotografije projekata ili Sketchfab linkove. Svaka kartica može ugraditi interaktivni 3D preglednik.</p>
+  </div>
+
+  <div class="portfolio-grid">
+    <div class="portfolio-card">
+      <div class="portfolio-thumb">
+        <div class="portfolio-thumb-inner">
+          <!-- Replace this div with a Sketchfab embed or <img> tag -->
+          <svg class="placeholder-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <span data-lang="en">Your Project Here</span>
+          <span data-lang="bs">Vaš Projekt Ovdje</span>
+        </div>
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-tag" data-lang="en">3D Scan · BIM</div>
+        <div class="portfolio-tag" data-lang="bs">3D Sken · BIM</div>
+        <h3 data-lang="en">Project Name</h3>
+        <h3 data-lang="bs">Naziv Projekta</h3>
+        <p data-lang="en">Location · Year · LOD 300</p>
+        <p data-lang="bs">Lokacija · Godina · LOD 300</p>
+      </div>
+    </div>
+
+    <div class="portfolio-card">
+      <div class="portfolio-thumb">
+        <div class="portfolio-thumb-inner">
+          <svg class="placeholder-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <span data-lang="en">Your Project Here</span>
+          <span data-lang="bs">Vaš Projekt Ovdje</span>
+        </div>
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-tag" data-lang="en">Point Cloud · Survey</div>
+        <div class="portfolio-tag" data-lang="bs">Oblak Tačaka · Izmjera</div>
+        <h3 data-lang="en">Project Name</h3>
+        <h3 data-lang="bs">Naziv Projekta</h3>
+        <p data-lang="en">Location · Year · LOD 400</p>
+        <p data-lang="bs">Lokacija · Godina · LOD 400</p>
+      </div>
+    </div>
+
+    <div class="portfolio-card">
+      <div class="portfolio-thumb">
+        <div class="portfolio-thumb-inner">
+          <svg class="placeholder-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <span data-lang="en">Your Project Here</span>
+          <span data-lang="bs">Vaš Projekt Ovdje</span>
+        </div>
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-tag" data-lang="en">UAV · Infrastructure</div>
+        <div class="portfolio-tag" data-lang="bs">UAV · Infrastruktura</div>
+        <h3 data-lang="en">Project Name</h3>
+        <h3 data-lang="bs">Naziv Projekta</h3>
+        <p data-lang="en">Location · Year · LOD 200</p>
+        <p data-lang="bs">Lokacija · Godina · LOD 200</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="portfolio-note" data-lang="en">To add a Sketchfab model, replace the placeholder div with: &lt;div class="sketchfab-embed-wrapper"&gt;&lt;iframe src="https://sketchfab.com/models/YOUR_ID/embed"&gt;&lt;/iframe&gt;&lt;/div&gt;</p>
+  <p class="portfolio-note" data-lang="bs">Za dodavanje Sketchfab modela, zamijenite placeholder div s: &lt;div class="sketchfab-embed-wrapper"&gt;&lt;iframe src="https://sketchfab.com/models/VAŠ_ID/embed"&gt;&lt;/iframe&gt;&lt;/div&gt;</p>
+</section>
+
+<!-- TECHNOLOGY -->
+<section id="technology">
+  <div class="tech-layout">
+    <div>
+      <div class="section-label" data-lang="en">Equipment & Software</div>
+      <div class="section-label" data-lang="bs">Oprema i Softver</div>
+      <h2 class="section-title" data-lang="en">Professional-Grade Technology</h2>
+      <h2 class="section-title" data-lang="bs">Profesionalna Tehnologija</h2>
+      <p class="section-sub" data-lang="en">We work with industry-leading scanning hardware and BIM software to guarantee accuracy, interoperability, and compatibility with your project's tools.</p>
+      <p class="section-sub" data-lang="bs">Radimo s vodećom skenirnom opremom i BIM softverom kako bismo garantovali preciznost, interoperabilnost i kompatibilnost s alatima vašeg projekta.</p>
+
+      <div class="tech-tags">
+        <span class="tech-tag">Leica BLK360</span>
+        <span class="tech-tag">FARO Focus</span>
+        <span class="tech-tag">Autodesk Revit</span>
+        <span class="tech-tag">ArchiCAD</span>
+        <span class="tech-tag">Cyclone Register</span>
+        <span class="tech-tag">Recap Pro</span>
+        <span class="tech-tag">Navisworks</span>
+        <span class="tech-tag">IFC / E57</span>
+        <span class="tech-tag">DJI L2</span>
+        <span class="tech-tag">CloudCompare</span>
+      </div>
+    </div>
+
+    <div class="tech-visual">
+      <div class="tech-spec">
+        <div class="tech-spec-label" data-lang="en">Max Range</div>
+        <div class="tech-spec-label" data-lang="bs">Maks. Domet</div>
+        <div class="tech-spec-val">360m</div>
+      </div>
+      <div class="tech-spec">
+        <div class="tech-spec-label" data-lang="en">Accuracy</div>
+        <div class="tech-spec-label" data-lang="bs">Preciznost</div>
+        <div class="tech-spec-val">±2mm</div>
+      </div>
+      <div class="tech-spec">
+        <div class="tech-spec-label" data-lang="en">Scan Speed</div>
+        <div class="tech-spec-label" data-lang="bs">Brzina Sken.</div>
+        <div class="tech-spec-val">1M pts/s</div>
+      </div>
+      <div class="tech-spec">
+        <div class="tech-spec-label" data-lang="en">Max BIM LOD</div>
+        <div class="tech-spec-label" data-lang="bs">Maks. BIM LOD</div>
+        <div class="tech-spec-val">LOD 400</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-layout">
+    <div class="contact-info">
+      <div class="section-label" data-lang="en">Get in Touch</div>
+      <div class="section-label" data-lang="bs">Kontaktirajte Nas</div>
+      <h2 class="section-title" data-lang="en">Start Your Project</h2>
+      <h2 class="section-title" data-lang="bs">Pokrenite Vaš Projekt</h2>
+      <p data-lang="en">Tell us about your building or site and we'll get back to you with a tailored proposal, typically within 24 hours.</p>
+      <p data-lang="bs">Recite nam o vašem objektu ili terenu i odgovorit ćemo vam prilagođenom ponudom, obično u roku od 24 sata.</p>
+
+      <div class="contact-item">
+        <div class="contact-item-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="contact-item-text">
+          <strong data-lang="en">Phone</strong>
+          <strong data-lang="bs">Telefon</strong>
+          +387 XX XXX XXX
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-item-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="contact-item-text">
+          <strong>Email</strong>
+          info@geobim5d.com
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-item-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="contact-item-text">
+          <strong data-lang="en">Office</strong>
+          <strong data-lang="bs">Ured</strong>
+          Sarajevo, Bosnia & Herzegovina
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label data-lang="en">First Name</label>
+          <label data-lang="bs">Ime</label>
+          <input type="text" placeholder="John" />
+        </div>
+        <div class="form-group">
+          <label data-lang="en">Last Name</label>
+          <label data-lang="bs">Prezime</label>
+          <input type="text" placeholder="Doe" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="john@company.com" />
+      </div>
+      <div class="form-group">
+        <label data-lang="en">Company / Organisation</label>
+        <label data-lang="bs">Kompanija / Organizacija</label>
+        <input type="text" />
+      </div>
+      <div class="form-group">
+        <label data-lang="en">Service Required</label>
+        <label data-lang="bs">Tražena Usluga</label>
+        <select>
+          <option data-lang="en">3D Laser Scanning</option>
+          <option data-lang="bs">3D Lasersko Skeniranje</option>
+          <option data-lang="en">BIM Modeling</option>
+          <option data-lang="bs">BIM Modeliranje</option>
+          <option data-lang="en">Geodetic Survey</option>
+          <option data-lang="bs">Geodetska Izmjera</option>
+          <option data-lang="en">UAV / Drone Survey</option>
+          <option data-lang="bs">UAV / Drone Izmjera</option>
+          <option data-lang="en">Other</option>
+          <option data-lang="bs">Ostalo</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label data-lang="en">Project Description</label>
+        <label data-lang="bs">Opis Projekta</label>
+        <textarea data-lang="en" placeholder="Describe your building, site area, required deliverables and any deadlines…"></textarea>
+        <textarea data-lang="bs" placeholder="Opišite vaš objekt, površinu terena, tražene isporuke i rokove…"></textarea>
+      </div>
+      <button class="btn-submit" data-lang="en">Send Enquiry</button>
+      <button class="btn-submit" data-lang="bs">Pošalji Upit</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="LOGO_Reklama.png" alt="GeoBIM5D International"/>
+  </div>
+  <p>&copy; 2025 GeoBIM5D International. <span data-lang="en">All rights reserved.</span><span data-lang="bs">Sva prava zadržana.</span></p>
+  <p><a href="mailto:info@geobim5d.com">info@geobim5d.com</a></p>
+</footer>
+
+<script>
+  /* ── LANGUAGE TOGGLE ── */
+  function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+    });
+    document.documentElement.lang = lang === 'bs' ? 'bs' : 'en';
+  }
+
+  /* ── HAMBURGER ── */
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  /* Close menu on link click */
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+
+  /* ── POINT CLOUD CANVAS ── */
+  const canvas = document.getElementById('pointcloud');
+  const ctx = canvas.getContext('2d');
+
+  let dots = [];
+  let W, H;
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+    dots = [];
+    const count = Math.floor((W * H) / 4000);
+    for (let i = 0; i < count; i++) {
+      dots.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.8 + 0.4,
+        vx: (Math.random() - 0.5) * 0.18,
+        vy: (Math.random() - 0.5) * 0.18,
+        // Alternate between white dots and orange dots
+        col: Math.random() > 0.85 ? '#E84E1B' : 'rgba(255,255,255,0.7)'
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (const d of dots) {
+      d.x += d.vx;
+      d.y += d.vy;
+      if (d.x < 0) d.x = W;
+      if (d.x > W) d.x = 0;
+      if (d.y < 0) d.y = H;
+      if (d.y > H) d.y = 0;
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+      ctx.fillStyle = d.col;
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+
+  /* ── SCROLL REVEAL ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .process-step, .portfolio-card, .tech-spec').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
