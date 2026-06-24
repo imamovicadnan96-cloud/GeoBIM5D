@@ -86,10 +86,18 @@
       padding: 5px 12px;
       letter-spacing: 0.05em;
       transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px;
     }
     .lang-btn.active {
       background: var(--orange);
       color: var(--white);
+    }
+    .lang-flag {
+      width: 20px; height: 14px;
+      border-radius: 2px;
+      object-fit: cover;
+      display: inline-block;
+      vertical-align: middle;
     }
 
     .hamburger {
@@ -554,8 +562,12 @@
     <li><a href="#contact" data-lang="en" class="inline">Contact</a><a href="#contact" data-lang="bs" class="inline">Kontakt</a></li>
     <li>
       <div class="lang-toggle">
-        <button class="lang-btn active" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" onclick="setLang('bs')">BS</button>
+        <button class="lang-btn active" onclick="setLang('en')">
+          <img class="lang-flag" src="https://flagcdn.com/w40/gb.png" alt="EN"/> EN
+        </button>
+        <button class="lang-btn" onclick="setLang('bs')">
+          <img class="lang-flag" src="https://flagcdn.com/w40/ba.png" alt="BS"/> BS
+        </button>
       </div>
     </li>
   </ul>
