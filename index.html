@@ -539,9 +539,11 @@
     /* ── HIDDEN LANGUAGE STRINGS ── */
     [data-lang] { display: none; }
     .lang-en [data-lang="en"],
-    .lang-bs [data-lang="bs"] { display: block; }
+    .lang-bs [data-lang="bs"],
+    .lang-de [data-lang="de"] { display: block; }
     .lang-en [data-lang="en"].inline,
-    .lang-bs [data-lang="bs"].inline { display: inline; }
+    .lang-bs [data-lang="bs"].inline,
+    .lang-de [data-lang="de"].inline { display: inline; }
 
     /* ── IMAGE SLIDER ── */
     .slider {
@@ -605,11 +607,11 @@
     </a>
   </div>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#services" data-lang="en" class="inline">Services</a><a href="#services" data-lang="bs" class="inline">Usluge</a></li>
-    <li><a href="#process" data-lang="en" class="inline">Process</a><a href="#process" data-lang="bs" class="inline">Proces</a></li>
-    <li><a href="#portfolio" data-lang="en" class="inline">Portfolio</a><a href="#portfolio" data-lang="bs" class="inline">Portfolio</a></li>
-    <li><a href="#technology" data-lang="en" class="inline">Technology</a><a href="#technology" data-lang="bs" class="inline">Tehnologija</a></li>
-    <li><a href="#contact" data-lang="en" class="inline">Contact</a><a href="#contact" data-lang="bs" class="inline">Kontakt</a></li>
+    <li><a href="#services" data-lang="en" class="inline">Services</a><a href="#services" data-lang="bs" class="inline">Usluge</a><a href="#services" data-lang="de" class="inline">Leistungen</a></li>
+    <li><a href="#process" data-lang="en" class="inline">Process</a><a href="#process" data-lang="bs" class="inline">Proces</a><a href="#process" data-lang="de" class="inline">Ablauf</a></li>
+    <li><a href="#portfolio" data-lang="en" class="inline">Portfolio</a><a href="#portfolio" data-lang="bs" class="inline">Portfolio</a><a href="#portfolio" data-lang="de" class="inline">Portfolio</a></li>
+    <li><a href="#technology" data-lang="en" class="inline">Technology</a><a href="#technology" data-lang="bs" class="inline">Tehnologija</a><a href="#technology" data-lang="de" class="inline">Technologie</a></li>
+    <li><a href="#contact" data-lang="en" class="inline">Contact</a><a href="#contact" data-lang="bs" class="inline">Kontakt</a><a href="#contact" data-lang="de" class="inline">Kontakt</a></li>
     <li>
       <div class="lang-toggle">
         <button class="lang-btn active" onclick="setLang('en')">
@@ -617,6 +619,9 @@
         </button>
         <button class="lang-btn" onclick="setLang('bs')">
           <img class="lang-flag" src="https://flagcdn.com/w40/ba.png" alt="BS"/> BS
+        </button>
+        <button class="lang-btn" onclick="setLang('de')">
+          <img class="lang-flag" src="https://flagcdn.com/w40/de.png" alt="DE"/> DE
         </button>
       </div>
     </li>
@@ -632,18 +637,23 @@
   <div class="hero-content">
     <div class="hero-eyebrow" data-lang="en">Geodesy · 3D Scanning · BIM Modeling</div>
     <div class="hero-eyebrow" data-lang="bs">Geodezija · 3D Skeniranje · BIM Modeliranje</div>
+    <div class="hero-eyebrow" data-lang="de">Geodäsie · 3D-Scanning · BIM-Modellierung</div>
 
     <h1 data-lang="en">From the Real World<br/><span>Into Precise Digital Models</span></h1>
     <h1 data-lang="bs">Iz Stvarnog Svijeta<br/><span>U Precizne Digitalne Modele</span></h1>
+    <h1 data-lang="de">Aus der realen Welt<br/><span>In präzise digitale Modelle</span></h1>
 
     <p class="hero-sub" data-lang="en">We capture existing structures with high-accuracy 3D laser scanning and deliver professional BIM models for architecture, construction, and infrastructure projects.</p>
     <p class="hero-sub" data-lang="bs">Snimamo postojeće objekte visokopreciznim 3D laserskim skeniranjem i isporučujemo profesionalne BIM modele za arhitektonske, građevinske i infrastrukturne projekte.</p>
+    <p class="hero-sub" data-lang="de">Wir erfassen bestehende Gebäude mit hochgenauem 3D-Laserscanning und liefern professionelle BIM-Modelle für Architektur-, Bau- und Infrastrukturprojekte.</p>
 
     <div class="hero-ctas">
       <a href="#contact" class="btn-primary" data-lang="en">Request a Quote</a>
       <a href="#contact" class="btn-primary" data-lang="bs">Zatražite Ponudu</a>
+      <a href="#contact" class="btn-primary" data-lang="de">Angebot Anfragen</a>
       <a href="#portfolio" class="btn-outline" data-lang="en">See Our Work</a>
       <a href="#portfolio" class="btn-outline" data-lang="bs">Pogledajte Radove</a>
+      <a href="#portfolio" class="btn-outline" data-lang="de">Unsere Arbeiten</a>
     </div>
 
     <div class="hero-stats">
@@ -651,21 +661,25 @@
         <div class="stat-num">±2mm</div>
         <div class="stat-label" data-lang="en">Scan Accuracy</div>
         <div class="stat-label" data-lang="bs">Preciznost Skeniranja</div>
+        <div class="stat-label" data-lang="de">Scan-Genauigkeit</div>
       </div>
       <div class="stat">
         <div class="stat-num">LOD 400</div>
         <div class="stat-label" data-lang="en">BIM Detail Level</div>
         <div class="stat-label" data-lang="bs">Nivo Detalja BIM</div>
+        <div class="stat-label" data-lang="de">BIM-Detailgrad</div>
       </div>
       <div class="stat">
         <div class="stat-num">IFC</div>
         <div class="stat-label" data-lang="en">Open Standard Output</div>
         <div class="stat-label" data-lang="bs">Otvoreni Format Izlaza</div>
+        <div class="stat-label" data-lang="de">Offenes Ausgabeformat</div>
       </div>
       <div class="stat">
         <div class="stat-num">300+</div>
         <div class="stat-label" data-lang="en">Projects Completed</div>
         <div class="stat-label" data-lang="bs">Završenih Projekata</div>
+        <div class="stat-label" data-lang="de">Abgeschlossene Projekte</div>
       </div>
     </div>
   </div>
@@ -673,6 +687,7 @@
   <div class="scroll-hint">
     <span data-lang="en">Scroll</span>
     <span data-lang="bs">Skroluj</span>
+    <span data-lang="de">Scrollen</span>
     <div class="scroll-arrow"></div>
   </div>
 </section>
@@ -682,6 +697,7 @@
   <div class="services-header">
     <div class="section-label" data-lang="en">What We Do</div>
     <div class="section-label" data-lang="bs">Šta Radimo</div>
+    <div class="section-label" data-lang="de">Was Wir Tun</div>
     <h2 class="section-title" data-lang="en">End-to-End Digital Surveying</h2>
     <h2 class="section-title" data-lang="bs">Potpuna Digitalna Izmjera</h2>
     <p class="section-sub" data-lang="en">From site capture to deliverable-ready models — we handle the full workflow for buildings, industrial facilities, and civil infrastructure.</p>
@@ -758,6 +774,7 @@
   <div class="process-header">
     <div class="section-label" data-lang="en">How It Works</div>
     <div class="section-label" data-lang="bs">Kako Funkcionira</div>
+    <div class="section-label" data-lang="de">Wie Es Funktioniert</div>
     <h2 class="section-title" data-lang="en">Our Workflow</h2>
     <h2 class="section-title" data-lang="bs">Naš Radni Tok</h2>
     <p class="section-sub" data-lang="en">A clear, structured process from first contact to final deliverable.</p>
@@ -771,6 +788,8 @@
       <h3 data-lang="bs">Konsultacije</h3>
       <p data-lang="en">We assess the project scope, required LOD, output formats, and site conditions to prepare an accurate proposal.</p>
       <p data-lang="bs">Procjenjujemo opseg projekta, traženi LOD, izlazne formate i uvjete na terenu radi precizne ponude.</p>
+      <h3 data-lang="de">Beratung</h3>
+      <p data-lang="de">Wir bewerten den Projektumfang, den geforderten LOD, Ausgabeformate und Geländebedingungen für ein präzises Angebot.</p>
     </div>
     <div class="process-step">
       <div class="step-num">02</div>
@@ -778,6 +797,8 @@
       <h3 data-lang="bs">Terensko Skeniranje</h3>
       <p data-lang="en">Our team mobilizes to site with professional-grade equipment and captures a complete, registered point cloud.</p>
       <p data-lang="bs">Naš tim izlazi na teren s profesionalnom opremom i prikuplja kompletan, registriran oblak tačaka.</p>
+      <h3 data-lang="de">Geländescanning</h3>
+      <p data-lang="de">Unser Team rückt mit professioneller Ausrüstung aus und erfasst eine vollständige, registrierte Punktwolke.</p>
     </div>
     <div class="process-step">
       <div class="step-num">03</div>
@@ -785,6 +806,8 @@
       <h3 data-lang="bs">Obrada Podataka</h3>
       <p data-lang="en">Point clouds are registered, cleaned, and geo-referenced in office using specialist software.</p>
       <p data-lang="bs">Oblaci tačaka se registriraju, čiste i geo-referenciraju u uredu uz pomoć specijaliziranog softvera.</p>
+      <h3 data-lang="de">Datenverarbeitung</h3>
+      <p data-lang="de">Punktwolken werden im Büro registriert, bereinigt und georeferenziert — mit Spezialsoftware.</p>
     </div>
     <div class="process-step">
       <div class="step-num">04</div>
@@ -792,6 +815,8 @@
       <h3 data-lang="bs">BIM Modeliranje</h3>
       <p data-lang="en">Experienced modelers extract geometry and build the BIM model to the agreed level of detail.</p>
       <p data-lang="bs">Iskusni modelari izvlače geometriju i grade BIM model prema dogovorenom nivou detalja.</p>
+      <h3 data-lang="de">BIM-Modellierung</h3>
+      <p data-lang="de">Erfahrene Modellierer extrahieren die Geometrie und erstellen das BIM-Modell gemäß dem vereinbarten Detailgrad.</p>
     </div>
     <div class="process-step">
       <div class="step-num">05</div>
@@ -799,6 +824,8 @@
       <h3 data-lang="bs">Kontrola i Isporuka</h3>
       <p data-lang="en">Models are QA-checked against the point cloud and delivered in your required formats: RVT, IFC, DWG, or E57.</p>
       <p data-lang="bs">Modeli se provjere nasuprot oblaku tačaka i isporuče u traženim formatima: RVT, IFC, DWG ili E57.</p>
+      <h3 data-lang="de">QS & Lieferung</h3>
+      <p data-lang="de">Modelle werden gegen die Punktwolke geprüft und in den gewünschten Formaten geliefert: RVT, IFC, DWG oder E57.</p>
     </div>
   </div>
 </section>
@@ -808,10 +835,11 @@
   <div class="portfolio-header">
     <div class="section-label" data-lang="en">Our Work</div>
     <div class="section-label" data-lang="bs">Naši Radovi</div>
+    <div class="section-label" data-lang="de">Unsere Arbeiten</div>
     <h2 class="section-title" data-lang="en">Selected Projects</h2>
     <h2 class="section-title" data-lang="bs">Odabrani Projekti</h2>
-    <p class="section-sub" data-lang="en">Add your project photos or Sketchfab model links here. Each card can embed an interactive 3D viewer.</p>
-    <p class="section-sub" data-lang="bs">Ovdje dodajte fotografije projekata ili Sketchfab linkove. Svaka kartica može ugraditi interaktivni 3D preglednik.</p>
+    <h2 class="section-title" data-lang="de">Ausgewählte Projekte</h2>
+
   </div>
 
   <div class="portfolio-grid">
@@ -832,6 +860,7 @@
       <div class="portfolio-info">
         <div class="portfolio-tag" data-lang="en">3D Scan · BIM</div>
         <div class="portfolio-tag" data-lang="bs">3D Sken · BIM</div>
+        <div class="portfolio-tag" data-lang="de">3D-Scan · BIM</div>
         <h3 data-lang="en">Project Name</h3>
         <h3 data-lang="bs">Naziv Projekta</h3>
         <p data-lang="en">Location · Year · LOD 300</p>
@@ -850,6 +879,7 @@
       <div class="portfolio-info">
         <div class="portfolio-tag" data-lang="en">Point Cloud · Survey</div>
         <div class="portfolio-tag" data-lang="bs">Oblak Tačaka · Izmjera</div>
+        <div class="portfolio-tag" data-lang="de">Punktwolke · Vermessung</div>
         <h3 data-lang="en">Project Name</h3>
         <h3 data-lang="bs">Naziv Projekta</h3>
         <p data-lang="en">Location · Year · LOD 400</p>
@@ -879,6 +909,7 @@
       <div class="portfolio-info">
         <div class="portfolio-tag" data-lang="en">UAV · Photogrammetry</div>
         <div class="portfolio-tag" data-lang="bs">UAV · Fotogrametrija</div>
+        <div class="portfolio-tag" data-lang="de">UAV · Photogrammetrie</div>
         <h3 data-lang="en">City Sports Hall</h3>
         <h3 data-lang="bs">Gradska Sportska Dvorana</h3>
         <p data-lang="en">Goražde · 2024 · LOD 200</p>
@@ -887,8 +918,7 @@
     </div>
   </div>
 
-  <p class="portfolio-note" data-lang="en">To add a Sketchfab model, replace the placeholder div with: &lt;div class="sketchfab-embed-wrapper"&gt;&lt;iframe src="https://sketchfab.com/models/YOUR_ID/embed"&gt;&lt;/iframe&gt;&lt;/div&gt;</p>
-  <p class="portfolio-note" data-lang="bs">Za dodavanje Sketchfab modela, zamijenite placeholder div s: &lt;div class="sketchfab-embed-wrapper"&gt;&lt;iframe src="https://sketchfab.com/models/VAŠ_ID/embed"&gt;&lt;/iframe&gt;&lt;/div&gt;</p>
+
 </section>
 
 <!-- TECHNOLOGY -->
@@ -897,6 +927,7 @@
     <div>
       <div class="section-label" data-lang="en">Equipment & Software</div>
       <div class="section-label" data-lang="bs">Oprema i Softver</div>
+      <div class="section-label" data-lang="de">Ausrüstung & Software</div>
       <h2 class="section-title" data-lang="en">Professional-Grade Technology</h2>
       <h2 class="section-title" data-lang="bs">Profesionalna Tehnologija</h2>
       <p class="section-sub" data-lang="en">We work with industry-leading scanning hardware and BIM software to guarantee accuracy, interoperability, and compatibility with your project's tools.</p>
@@ -920,21 +951,25 @@
       <div class="tech-spec">
         <div class="tech-spec-label" data-lang="en">Max Range</div>
         <div class="tech-spec-label" data-lang="bs">Maks. Domet</div>
+        <div class="tech-spec-label" data-lang="de">Max. Reichweite</div>
         <div class="tech-spec-val">340m</div>
       </div>
       <div class="tech-spec">
         <div class="tech-spec-label" data-lang="en">Accuracy</div>
         <div class="tech-spec-label" data-lang="bs">Preciznost</div>
+        <div class="tech-spec-label" data-lang="de">Genauigkeit</div>
         <div class="tech-spec-val">±2mm</div>
       </div>
       <div class="tech-spec">
         <div class="tech-spec-label" data-lang="en">Scan Speed</div>
         <div class="tech-spec-label" data-lang="bs">Brzina Sken.</div>
+        <div class="tech-spec-label" data-lang="de">Scangeschwindigkeit</div>
         <div class="tech-spec-val">1M pts/s</div>
       </div>
       <div class="tech-spec">
         <div class="tech-spec-label" data-lang="en">Max BIM LOD</div>
         <div class="tech-spec-label" data-lang="bs">Maks. BIM LOD</div>
+        <div class="tech-spec-label" data-lang="de">Max. BIM LOD</div>
         <div class="tech-spec-val">LOD 400</div>
       </div>
     </div>
@@ -947,6 +982,7 @@
     <div class="contact-info">
       <div class="section-label" data-lang="en">Get in Touch</div>
       <div class="section-label" data-lang="bs">Kontaktirajte Nas</div>
+      <div class="section-label" data-lang="de">Kontaktieren Sie Uns</div>
       <h2 class="section-title" data-lang="en">Start Your Project</h2>
       <h2 class="section-title" data-lang="bs">Pokrenite Vaš Projekt</h2>
       <p data-lang="en">Tell us about your building or site and we'll get back to you with a tailored proposal, typically within 24 hours.</p>
@@ -959,6 +995,7 @@
         <div class="contact-item-text">
           <strong data-lang="en">Phone</strong>
           <strong data-lang="bs">Telefon</strong>
+          <strong data-lang="de">Telefon</strong>
           +387 62 017 736
         </div>
       </div>
@@ -980,6 +1017,7 @@
         <div class="contact-item-text">
           <strong data-lang="en">Office</strong>
           <strong data-lang="bs">Ured</strong>
+          <strong data-lang="de">Büro</strong>
           Zaima Imamovića, Goražde, BiH
         </div>
       </div>
@@ -990,11 +1028,13 @@
         <div class="form-group">
           <label data-lang="en">First Name</label>
           <label data-lang="bs">Ime</label>
+          <label data-lang="de">Vorname</label>
           <input type="text" placeholder="John" />
         </div>
         <div class="form-group">
           <label data-lang="en">Last Name</label>
           <label data-lang="bs">Prezime</label>
+          <label data-lang="de">Nachname</label>
           <input type="text" placeholder="Doe" />
         </div>
       </div>
@@ -1031,6 +1071,7 @@
       </div>
       <button class="btn-submit" data-lang="en">Send Enquiry</button>
       <button class="btn-submit" data-lang="bs">Pošalji Upit</button>
+      <button class="btn-submit" data-lang="de">Anfrage Senden</button>
     </div>
   </div>
 </section>
@@ -1043,7 +1084,7 @@
       <span class="logo-text"><span class="logo-name-row"><span class="logo-geo">Geo</span><span class="logo-bim">BIM5D</span></span><span class="logo-intl">International</span></span>
     </a>
   </div>
-  <p>&copy; 2022 GeoBIM5D International. <span data-lang="en">All rights reserved.</span><span data-lang="bs">Sva prava zadržana.</span></p>
+  <p>&copy; 2022 GeoBIM5D International. <span data-lang="en">All rights reserved.</span><span data-lang="bs">Sva prava zadržana.</span><span data-lang="de">Alle Rechte vorbehalten.</span></p>
   <p><a href="mailto:info@geobim5d.com">info@geobim5d.com</a></p>
 </footer>
 
@@ -1052,9 +1093,10 @@
   function setLang(lang) {
     document.body.className = 'lang-' + lang;
     document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+      btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
     });
-    document.documentElement.lang = lang === 'bs' ? 'bs' : 'en';
+    const langMap = { en: 'en', bs: 'bs', de: 'de' };
+    document.documentElement.lang = langMap[lang] || 'en';
   }
 
   /* ── HAMBURGER ── */
