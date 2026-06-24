@@ -594,6 +594,34 @@
       font-family: 'Inter', sans-serif;
       z-index: 5;
     }
+
+    /* ── WIREFRAME BUILDING BACKGROUND ── */
+    .wireframe-bg {
+      position: relative;
+      overflow: hidden;
+    }
+    .wireframe-bg::before {
+      content: '';
+      position: absolute;
+      right: -60px;
+      bottom: -40px;
+      width: 520px;
+      height: 520px;
+      background-image: url('bim-definition-preview.webp');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: bottom right;
+      opacity: 0.06;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      filter: invert(1) brightness(2);
+    }
+    #process.wireframe-bg::before {
+      right: auto;
+      left: -60px;
+      opacity: 0.05;
+      transform: scaleX(-1);
+    }
   </style>
 </head>
 <body class="lang-en">
@@ -632,7 +660,7 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="home">
+<section class="hero wireframe-bg" id="home">
   <canvas id="pointcloud"></canvas>
   <div class="hero-content">
     <div class="hero-eyebrow" data-lang="en">Geodesy · 3D Scanning · BIM Modeling</div>
@@ -700,8 +728,10 @@
     <div class="section-label" data-lang="de">Was Wir Tun</div>
     <h2 class="section-title" data-lang="en">End-to-End Digital Surveying</h2>
     <h2 class="section-title" data-lang="bs">Potpuna Digitalna Izmjera</h2>
+    <h2 class="section-title" data-lang="de">Digitale Vermessung von A bis Z</h2>
     <p class="section-sub" data-lang="en">From site capture to deliverable-ready models — we handle the full workflow for buildings, industrial facilities, and civil infrastructure.</p>
     <p class="section-sub" data-lang="bs">Od snimanja terena do gotovih modela — pokrivamo cijeli radni tok za zgrade, industrijska postrojenja i civilnu infrastrukturu.</p>
+    <p class="section-sub" data-lang="de">Von der Geländeaufnahme bis zum fertigen Modell — wir decken den gesamten Arbeitsablauf für Gebäude, Industrieanlagen und Infrastruktur ab.</p>
   </div>
 
   <div class="services-grid">
@@ -770,7 +800,7 @@
 </section>
 
 <!-- PROCESS -->
-<section id="process">
+<section id="process" class="wireframe-bg">
   <div class="process-header">
     <div class="section-label" data-lang="en">How It Works</div>
     <div class="section-label" data-lang="bs">Kako Funkcionira</div>
